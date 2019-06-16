@@ -16,3 +16,10 @@ module Utils where
     getRightTree (Empty) = Empty
     getRightTree (Node _ _ Empty ) = Empty
     getRightTree (Node _ _ v ) = v
+
+    isLeaf :: Tree -> Bool
+    isLeaf (Node _ (Node _ _ _) _) = False
+    isLeaf (Node _ _ (Node _ _ _)) = False
+    isLeaf (Empty) = False
+    isLeaf (Node _ Empty Empty) = True
+    
