@@ -1,41 +1,43 @@
 module TestTree where
     import Utils
     
-    tryTest :: [(Char, Char, Char)] -> Tree -> Bool
-    tryTest program test 
+    tryTest :: Char -> [(Char, Char, Char)] -> Tree -> Bool
+    tryTest currentPlace program test 
         | getNode(test) == '0' = True
         | null program = False
-        | getNode(test) == ';' = tryProgram program test
+        | getNode(test) == ';' = tryProgram currentPlace program test
         | getNode(test) == '?' = False
         | getNode(test) == '^' = (
-            tryTest program (getLeftTree test) &&
-            tryTest program (getRightTree test)
+            tryTest currentPlace program (getLeftTree test) &&
+            tryTest currentPlace program (getRightTree test)
         )
         | getNode(test) == 'v' = (
-            tryTest program (getLeftTree test) ||
-            tryTest program (getRightTree test)
+            tryTest currentPlace program (getLeftTree test) ||
+            tryTest currentPlace program (getRightTree test)
         )
         | getNode(test) == '>' = (
-            (not (tryTest program (getLeftTree test))) ||
-            tryTest program (getRightTree test)
+            (not (tryTest currentPlace program (getLeftTree test))) ||
+            tryTest currentPlace program (getRightTree test)
         )
         | otherwise = False
 
-    tryProgram :: [(Char, Char, Char)] -> Tree -> Bool
-    tryProgram program test =
+    tryProgram :: Char-> [(Char, Char, Char)] -> Tree -> Bool
+    tryProgram currentPlace program test =
         if isLeaf test == True  {- test leaf-}
-                    then True
+                    then
+                        if (length (getEdgesByPlaceAndLabel currentPlace getNode(test) program)) > 0 then True
+                        else False
         else if (isLeaf(getLeftTree(test)) == True &&
                 isLeaf(getRightTree(test)) == True) {- test both sizes-}
-                    then (tryProgram program (getLeftTree test) &&
-                            tryProgram program (getRightTree test) )
+                    then (tryProgram currentPlace program (getLeftTree test) &&
+                            tryProgram currentPlace program (getRightTree test) )
         else if (isLeaf(getLeftTree(test)) == True && {- right branch is not a leaf-}
                 isLeaf(getRightTree(test)) == False) 
-                    then (tryProgram program (getLeftTree test) &&
-                            tryTest program (getRightTree test) )
+                    then (tryProgram currentPlace program (getLeftTree test) &&
+                            tryTest currentPlace program (getRightTree test) )
         else if (isLeaf(getLeftTree(test)) == False && {- left branch is not a leaf-}
             isLeaf(getRightTree(test)) == True) 
-                then (tryTest program (getLeftTree test) &&
-                        tryProgram program (getRightTree test) )
+                then (tryTest currentPlace program (getLeftTree test) &&
+                        tryProgram currentPlace program (getRightTree test) )
         else False
         

@@ -23,3 +23,8 @@ module Utils where
     isLeaf (Empty) = False
     isLeaf (Node _ Empty Empty) = True
     
+    getEdgesByPlace :: Char -> [(Char, Char, Char)] -> [(Char, Char, Char)] 
+    getEdgesByPlace place program = [ (place, b, c)| (a, b, c) <- program, a == place] 
+
+    getEdgesByPlaceAndLabel :: Char -> Char -> [(Char, Char, Char)] -> [(Char, Char, Char)] 
+    getEdgesByPlaceAndLabel place label program = [ (place, b, c)| (a, b, c) <- program, a == place, c == label] 
