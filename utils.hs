@@ -33,9 +33,13 @@ module Utils where
     getEdgesByPlaceAndLabel :: Char -> Char -> [(Char, Char, Char)] -> [(Char, Char, Char)] 
     getEdgesByPlaceAndLabel place label program = [ (place, b, c)| (a, b, c) <- program, a == place, c == label] 
 
+    getFst (v, _, _) = v
+
     getSnd (_, v, _) = v
+
+    getTrd (_, _, v) = v
 
     isTrue:: [Char] -> Bool
     isTrue ['T', 'r', 'u', 'e'] = True
-    isTrue ['T', 'r', 'u', 'e', _] = True
+    isTrue ['T', 'r', 'u', 'e', ' ', '-', ' ', _] = True
     isTrue _ = False
