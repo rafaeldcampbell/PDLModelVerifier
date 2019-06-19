@@ -17,7 +17,7 @@ module Utils where
     getRightTree (Node _ _ Empty ) = Empty
     getRightTree (Node _ _ v ) = v
 
-    isLeaf :: Tree -> Bool
+    isLeaf :: Tree -> Bool {- Verify if it is a term or empty. In other case, returns false -}
     isLeaf (Node _ (Node _ _ _) _) = False
     isLeaf (Node _ _ (Node _ _ _)) = False
     isLeaf (Empty) = False
@@ -27,17 +27,17 @@ module Utils where
     isEmpty (Node _ _ _) = False
     isEmpty (Empty) = True
     
-    getEdgesByPlace :: Char -> [(Char, Char, Char)] -> [(Char, Char, Char)] 
+    getEdgesByPlace :: Char -> [(Char, Char, Char)] -> [(Char, Char, Char)] {- get all possbile ways starting from the gotten place -}
     getEdgesByPlace place program = [ (place, b, c)| (a, b, c) <- program, a == place] 
 
-    getEdgesByPlaceAndLabel :: Char -> Char -> [(Char, Char, Char)] -> [(Char, Char, Char)] 
+    getEdgesByPlaceAndLabel :: Char -> Char -> [(Char, Char, Char)] -> [(Char, Char, Char)] {- get all possible ways starting from gotten palce and with the gotten label -}
     getEdgesByPlaceAndLabel place label program = [ (place, b, c)| (a, b, c) <- program, a == place, c == label] 
 
-    getFst (v, _, _) = v
+    getFst (v, _, _) = v {- get the first element from a tuple/3 -}
 
-    getSnd (_, v, _) = v
+    getSnd (_, v, _) = v {- get the first element from a tuple/3 -}
 
-    getTrd (_, _, v) = v
+    getTrd (_, _, v) = v {- get the first element from a tuple/3 -}
 
     isTrue:: [Char] -> Bool
     isTrue ['T', 'r', 'u', 'e'] = True
